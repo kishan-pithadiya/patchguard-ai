@@ -7,7 +7,7 @@
 
 **PatchGuard AI** is an autonomous DevSecOps and Site Reliability Engineering (SRE) engine designed to triage software regressions, diagnose root causes, generate verified security and bug patches, and automatically heal broken builds.
 
-Powered by a native **CrewAI** multi-agent pipeline and Abstract Syntax Tree (AST) static code intelligence, PatchGuard AI guarantees that every remediation patch satisfies rigorous quality gates—including regression blast-radius analysis, static type integrity, security vulnerability scanning, and branch coverage thresholds—with atomic Git rollbacks on failure.
+Powered by a native **CrewAI** multi-agent pipeline and Abstract Syntax Tree (AST) static code intelligence, PatchGuard AI guarantees that every remediation patch satisfies rigorous quality gates including regression blast-radius analysis, static type integrity, security vulnerability scanning, and branch coverage thresholds with atomic Git rollbacks on failure.
 
 ---
 
@@ -23,23 +23,26 @@ flowchart TD
     subgraph Analysis["2. Incident Triage & Consensus"]
         MEM --> ARCH["SRE Architect (Planner Agent)"]
         ARCH --> VOTE{"Remediation Consensus\n(Architect, Reviewer, Tester)"}
-        VOTE -->|Revise Fix Strategy| ARCH
+        VOTE -->|"Revise Strategy"| ARCH
     end
 
     subgraph Patching["3. Parallel Patch Implementation"]
-        VOTE -->|Approved Strategy| DISPATCH["Remediation Specialist Dispatcher"]
+        VOTE -->|"Approved Strategy"| DISPATCH["Remediation Specialist Dispatcher"]
         DISPATCH --> BE["Backend Security Coder"]
         DISPATCH --> FE["Frontend Patch Specialist"]
         DISPATCH --> DB["Database Migration Specialist"]
         DISPATCH --> TESTGEN["Regression Test Engineer"]
-        BE & FE & DB & TESTGEN --> MERGE["Role-Priority Conflict Resolver"]
+        BE --> MERGE["Role-Priority Conflict Resolver"]
+        FE --> MERGE
+        DB --> MERGE
+        TESTGEN --> MERGE
     end
 
     subgraph Gates["4. DevSecOps Quality Gates & Self-Healing"]
         MERGE --> AST_IMPACT["AST Blast-Radius Impact Tracer"]
         AST_IMPACT --> GATES{"DevSecOps Quality Gate"}
-        GATES -->|Pass (Coverage ≥ 70%, Lint, Types, Security)| DOC["SRE Post-Mortem Documenter"]
-        GATES -->|Fail & Attempts Left| DEBUG["Root-Cause Debugger Agent"]
+        GATES -->|"Pass (Coverage >= 70%, Lint, Types)"| DOC["SRE Post-Mortem Documenter"]
+        GATES -->|"Fail (Attempts Left)"| DEBUG["Root-Cause Debugger Agent"]
         DEBUG --> ROLLBACK["Git Savepoint / Atomic Rollback"]
         ROLLBACK --> TESTGEN
     end
@@ -171,14 +174,6 @@ uv run pip-audit .
 ```
 
 ---
-
-## 💼 Resume & Interview Guide
-
-See **[RESUME_GUIDE.md](RESUME_GUIDE.md)** for:
-- 4 resume bullet points tailored for **DevSecOps / SRE / Platform Software Engineer** roles to provide distinct variety alongside Clinical/Healthcare AI projects.
-- 2-minute elevator pitch for recruiter phone screens.
-- Deep-dive technical Q&A covering blast-radius analysis, self-healing rollback mechanics, and subprocess sandboxing.
-
 ---
 
 ## 📄 License
